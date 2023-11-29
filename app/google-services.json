@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "934164368554",
+    "project_id": "stayfresh-ec340",
+    "storage_bucket": "stayfresh-ec340.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:934164368554:android:b151829ab0611cf9f294d3",
+        "android_client_info": {
+          "package_name": "sheridancollege.prog39402.stayfresh"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "934164368554-uota863q6jij8hl6813h42k1e7gsl1tj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "sheridancollege.prog39402.stayfresh",
+            "certificate_hash": "253f6a016a9cf464604a9010aa7c30d860455f17"
+          }
+        },
+        {
+          "client_id": "934164368554-mcv61la30qqli1kcarc948t042dhjufb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDL7aXBaA7px_mRZ0gj9saXqzSXCR4sTOU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "934164368554-mcv61la30qqli1kcarc948t042dhjufb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

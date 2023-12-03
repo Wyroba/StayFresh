@@ -140,9 +140,9 @@ class StartFragment : Fragment(){
                 if (task.isSuccessful) {
                     if (isAdded) {
                         Toast.makeText(context, "Authentication successed.", Toast.LENGTH_SHORT).show()
-//                        if (findNavController().currentDestination?.id != R.id.fridgeFragment) {
-//                            findNavController().navigate(R.id.action_startFragment_to_fridgeFragment)
-//                        }
+                        if (findNavController().currentDestination?.id != R.id.recipeFragment) {
+                            findNavController().navigate(R.id.action_startFragment_to_fridgeFragment)
+                        }
                     }
                 } else {
                     Log.e(ContentValues.TAG, "Error getting user document", task.exception)

@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".Hamza.StartFragment">
+    android:orientation="vertical" >
 
     <TextView
         android:layout_width="match_parent"
@@ -73,8 +72,25 @@
             android:textColor="@color/forgotpassword"
             android:textStyle="bold"
             android:text=" Sign up"
-            android:focusable="true"
-            android:clickable="true"/>
+            android:clickable="true" />
+
     </LinearLayout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/google_sign_in_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="16dp"
+            android:backgroundTint="@color/forgotpassword"
+            android:contentDescription="Sign in with Google"
+            app:srcCompat="@drawable/google" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </LinearLayout>

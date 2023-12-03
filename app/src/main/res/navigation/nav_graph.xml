@@ -6,25 +6,14 @@
     app:startDestination="@id/startFragment">
 
     <fragment
-        android:id="@+id/startFragment"
-        android:name="sheridancollege.prog39402.stayfresh.Hamza.StartFragment"
-        android:label="StartFragment"
-        tools:layout="@layout/fragment_start">
-        <action
-            android:id="@+id/action_startFragment_to_registerFragment"
-            app:destination="@id/registerFragment" />
-        <action
-            android:id="@+id/action_startFragment_to_pantryFragment2"
-            app:destination="@id/pantryFragment2" />
-        <action
-            android:id="@+id/action_startFragment_to_contentFragment"
-            app:destination="@id/contentFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/registerFragment"
         android:name="sheridancollege.prog39402.stayfresh.Hamza.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_startFragment2"
+            app:destination="@id/startFragment" />
+    </fragment>
     <fragment
         android:id="@+id/pantryFragment2"
         android:name="sheridancollege.prog39402.stayfresh.Peter.PantryFragment"
@@ -78,6 +67,17 @@
         <action
             android:id="@+id/action_contentFragment_to_addFragment"
             app:destination="@id/addFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/startFragment"
+        android:name="sheridancollege.prog39402.stayfresh.StartFragment"
+        android:label="StartFragment" >
+        <action
+            android:id="@+id/action_startFragment_to_contentFragment"
+            app:destination="@id/contentFragment" />
+        <action
+            android:id="@+id/action_startFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
     </fragment>
 
 </navigation>

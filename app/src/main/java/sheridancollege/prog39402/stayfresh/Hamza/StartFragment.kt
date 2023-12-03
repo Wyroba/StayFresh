@@ -1,4 +1,4 @@
-package sheridancollege.prog39402.stayfresh.Hamza
+package sheridancollege.prog39402.stayfresh
 
 import android.content.ContentValues
 import android.content.Context
@@ -16,7 +16,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
-import sheridancollege.prog39402.stayfresh.R
 import sheridancollege.prog39402.stayfresh.databinding.FragmentStartBinding
 
 class StartFragment : Fragment(){
@@ -52,6 +51,11 @@ class StartFragment : Fragment(){
         if (user != null) {
             navigateToDestination()
         } else {
+            binding.googleSignInButton.setOnClickListener {
+                val signInIntent = mGoogleSignInClient.signInIntent
+                startActivityForResult(signInIntent, RC_SIGN_IN)
+            }
+
             binding.buttonLogin.setOnClickListener {
                 val email = binding.editTextEmail.text.toString()
                 val password = binding.editTextPassword.text.toString()
@@ -78,10 +82,10 @@ class StartFragment : Fragment(){
                         .show()
                 }
             }
-        }
 
-        binding.buttonRegister.setOnClickListener{
-
+            binding.buttonRegister.setOnClickListener {
+                findNavController().navigate(R.id.action_startFragment_to_registerFragment)
+            }
         }
     }
 
@@ -143,15 +147,19 @@ class StartFragment : Fragment(){
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     if (isAdded) {
-                        Toast.makeText(context, "Authentication success.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Authentication successed.", Toast.LENGTH_SHORT).show()
                         if (findNavController().currentDestination?.id != R.id.contentFragment) {
-                           findNavController().navigate(R.id.action_startFragment_to_contentFragment)
-                       }
+                            findNavController().navigate(R.id.action_startFragment_to_contentFragment)
+                        }
                     }
                 } else {
                     Log.e(ContentValues.TAG, "Error getting user document", task.exception)
                     // Handle the exception here.
                 }
             }
+    }
+
+    companion object {
+        private const val RC_SIGN_IN = 9001
     }
 }

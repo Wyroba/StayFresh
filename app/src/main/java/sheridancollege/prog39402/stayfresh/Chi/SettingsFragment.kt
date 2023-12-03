@@ -1,6 +1,7 @@
 package sheridancollege.prog39402.stayfresh.Chi
 
 import android.app.AlarmManager
+import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.ActivityNotFoundException
@@ -17,10 +18,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
+import sheridancollege.prog39402.stayfresh.MainActivity
 import sheridancollege.prog39402.stayfresh.Peter.ContentFragmentDirections
 import sheridancollege.prog39402.stayfresh.Peter.TwoDayToExpireCheckReceiver
+import sheridancollege.prog39402.stayfresh.R
 import sheridancollege.prog39402.stayfresh.databinding.FragmentSettingsBinding
 
 
@@ -81,6 +86,9 @@ class SettingsFragment : Fragment() {
                 // The user switched the theme to light mode
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
+
+            // Send notification about the dark mode change
+            sendDarkModeChangeNotification(isChecked)
         }
 
         // Two day to expire notification switch initialization
@@ -175,5 +183,45 @@ class SettingsFragment : Fragment() {
         if (notificationsEnabled) {
             binding.switchNotificationTwoDayToExpire.isChecked = twoDayToExpireEnabled
         }
+    }
+
+    private fun sendDarkModeChangeNotification(isDarkModeEnabled: Boolean) {
+        // Define notification channel ID and notification ID.
+        val channelId = "dark_mode_change_channel"
+        val notificationId = channelId.hashCode()
+
+        // Construct the intent that will be triggered when the notification is clicked.
+        val intent = Intent(requireContext(), MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val pendingIntentFlags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        } else {
+            PendingIntent.FLAG_UPDATE_CURRENT
+        }
+
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(
+            requireContext(), 0, intent, pendingIntentFlags
+        )
+        // Construct the notification with required attributes.
+        val notificationBuilder = NotificationCompat.Builder(requireContext(), channelId)
+            .setSmallIcon(R.drawable.hotpot)
+            .setContentTitle("Dark Mode Changed")
+            .setContentText("Dark Mode is now ${if (isDarkModeEnabled) "enabled" else "disabled"}.")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+
+        // Initialize the notification manager.
+        val notificationManager = NotificationManagerCompat.from(requireContext())
+
+        // For Android Oreo and later, create a notification channel.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(channelId, "Dark Mode Change", NotificationManager.IMPORTANCE_DEFAULT)
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        // Finally, send the constructed notification.
+        notificationManager.notify(notificationId, notificationBuilder.build())
     }
 }

@@ -1,4 +1,4 @@
-package sheridancollege.prog39402.stayfresh
+package sheridancollege.prog39402.stayfresh.Peter
 
 // Define a data class called CatGridItem
 data class CatGridItem(

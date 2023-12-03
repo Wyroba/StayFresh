@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background">
+    tools:context=".Hamza.StartFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Stay Fresh"
+        android:textAlignment="center"
+        android:textColor="@color/forgotpassword"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="50dp"/>
 
     <EditText
         android:id="@+id/editTextEmail"
@@ -59,7 +72,9 @@
             android:layout_height="wrap_content"
             android:textColor="@color/forgotpassword"
             android:textStyle="bold"
-            android:text=" Sign up"/>
+            android:text=" Sign up"
+            android:focusable="true"
+            android:clickable="true"/>
     </LinearLayout>
 
 </LinearLayout>

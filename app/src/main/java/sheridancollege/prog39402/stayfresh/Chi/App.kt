@@ -1,4 +1,4 @@
-package sheridancollege.prog39402.stayfresh
+package sheridancollege.prog39402.stayfresh.Chi
 
 import android.app.Application
 import com.google.firebase.FirebaseApp

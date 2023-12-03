@@ -1,4 +1,4 @@
-package sheridancollege.prog39402.stayfresh
+package sheridancollege.prog39402.stayfresh.Chi
 
 // Data class to represent a recipe with an ID, creation date, and recipe text
 data class Recipe(

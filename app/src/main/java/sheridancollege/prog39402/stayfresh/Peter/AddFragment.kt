@@ -1,4 +1,4 @@
-package sheridancollege.prog39402.stayfresh
+package sheridancollege.prog39402.stayfresh.Peter
 
 import android.os.Bundle
 import android.util.Log
@@ -7,11 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import sheridancollege.prog39402.stayfresh.R
 import sheridancollege.prog39402.stayfresh.databinding.FragmentAddBinding
 
 class AddFragment : Fragment() {
@@ -66,6 +66,10 @@ class AddFragment : Fragment() {
             addItem(item.text, item.imageName)
         }
 
+        // Initialize and set the RecyclerView adapter with the data and onClick listener.
+        val myAdapter = CatGridAdapter(requireContext(), catDataSet, onClick)
+        binding.myRecyclerView.adapter = myAdapter
+
     }
 
     // Function to display a dialog box for the user to add a new food item
@@ -90,8 +94,12 @@ class AddFragment : Fragment() {
             if (isValidFoodItemName(foodItemName)) {
                 handleFoodItemName(foodItemName)
                 Log.d("TAG", foodItemName)
-                //val directions = AddFragmentDirections.actionAddFragmentToScannerFragment(foodItemName, category, image)
-                //findNavController().navigate(directions)
+                val directions = AddFragmentDirections.actionAddFragmentToScannerFragment(
+                    foodItemName,
+                    category,
+                    image
+                )
+                findNavController().navigate(directions)
 
             } else {
                 // Show an error message if the entered food item name is invalid

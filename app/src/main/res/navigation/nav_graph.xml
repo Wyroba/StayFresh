@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/startFragment">
+
+    <fragment
+        android:id="@+id/startFragment"
+        android:name="sheridancollege.prog39402.stayfresh.Hamza.StartFragment"
+        android:label="StartFragment"
+        tools:layout="@layout/fragment_start">
+        <action
+            android:id="@+id/action_startFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_startFragment_to_pantryFragment2"
+            app:destination="@id/pantryFragment2" />
+        <action
+            android:id="@+id/action_startFragment_to_contentFragment"
+            app:destination="@id/contentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="sheridancollege.prog39402.stayfresh.Hamza.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" />
+    <fragment
+        android:id="@+id/pantryFragment2"
+        android:name="sheridancollege.prog39402.stayfresh.Peter.PantryFragment"
+        android:label="fragment_pantry"
+        tools:layout="@layout/fragment_pantry" >
+        <action
+            android:id="@+id/action_pantryFragment2_to_addFragment"
+            app:destination="@id/addFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addFragment"
+        android:name="sheridancollege.prog39402.stayfresh.Peter.AddFragment"
+        android:label="fragment_add"
+        tools:layout="@layout/fragment_add" >
+        <action
+            android:id="@+id/action_addFragment_to_scannerFragment"
+            app:destination="@id/scannerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/scannerFragment"
+        android:name="sheridancollege.prog39402.stayfresh.Peter.ScannerFragment"
+        android:label="fragment_scanner"
+        tools:layout="@layout/fragment_scanner" >
+        <argument
+            android:name="description"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="Description" />
+        <argument
+            android:name="category"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="Category" />
+        <argument
+            android:name="image"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="image" />
+        <action
+            android:id="@+id/action_scannerFragment_to_pantryFragment2"
+            app:destination="@id/pantryFragment2" />
+        <action
+            android:id="@+id/action_scannerFragment_to_contentFragment"
+            app:destination="@id/contentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/contentFragment"
+        android:name="sheridancollege.prog39402.stayfresh.Peter.ContentFragment"
+        android:label="fragment_content"
+        tools:layout="@layout/fragment_content" >
+        <action
+            android:id="@+id/action_contentFragment_to_addFragment"
+            app:destination="@id/addFragment" />
+    </fragment>
+
+</navigation>

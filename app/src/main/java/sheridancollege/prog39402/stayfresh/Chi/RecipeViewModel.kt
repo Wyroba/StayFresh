@@ -1,4 +1,4 @@
-package sheridancollege.prog39402.stayfresh
+package sheridancollege.prog39402.stayfresh.Chi
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.MutableLiveData

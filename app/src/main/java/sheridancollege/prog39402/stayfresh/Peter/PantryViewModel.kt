@@ -1,4 +1,4 @@
-package sheridancollege.prog39402.stayfresh
+package sheridancollege.prog39402.stayfresh.Peter
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -65,4 +65,17 @@ class PantryViewModel : ViewModel() {
             }
         }
     }
+
+    fun addFoodItem(userId: String, food: Food) {
+        viewModelScope.launch {
+            try {
+                val db = FirebaseFirestore.getInstance()
+                db.collection("users").document(userId).collection("pantry").add(food).await()
+                fetchPantry(userId) // Refresh the list
+            } catch (exception: Exception) {
+                Log.e("PantryViewModel", "Error adding food item", exception)
+            }
+        }
+    }
+
 }

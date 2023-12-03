@@ -24,7 +24,6 @@
         android:layout_gravity="center_horizontal"
         android:paddingLeft="15dp"
         android:hint="Username"
-        android:text="stayfreshtestuser0001@gmail.com"
         android:textColorHint="@color/forgotpassword"
         android:textColor="@color/forgotpassword"
         android:layout_marginTop="30dp" />

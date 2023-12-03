@@ -1,16 +1,21 @@
 package sheridancollege.prog39402.stayfresh.Chi
 
 import android.app.AlarmManager
+import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
@@ -21,6 +26,9 @@ import sheridancollege.prog39402.stayfresh.databinding.FragmentSettingsBinding
 
 class SettingsFragment : Fragment() {
 
+    // Declare sharedPreferences as a class-level variable
+    private lateinit var sharedPreferences: SharedPreferences
+
     private var _binding: FragmentSettingsBinding? = null
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
@@ -30,6 +38,10 @@ class SettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+
+        // Initialize sharedPreferences
+        sharedPreferences = requireContext().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
+
         return binding.root
     }
 
@@ -39,8 +51,14 @@ class SettingsFragment : Fragment() {
         setAppVersion()
 
         // Load the settings
-        val sharedPreferences = requireContext().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
+
         val isDarkModeEnabled = sharedPreferences.getBoolean("DarkMode", false)
+
+        // Two day to expire notification switch initialization
+        val notificationsEnabled = areNotificationsEnabled()
+        val twoDayToExpireEnabled = sharedPreferences.getBoolean("Notification_TwoDayExpire", true)
+        binding.switchNotificationTwoDayToExpire.isChecked = twoDayToExpireEnabled && notificationsEnabled
+
 
         // Initialize the switch state
         binding.switchDarkMode.isChecked = isDarkModeEnabled
@@ -66,11 +84,15 @@ class SettingsFragment : Fragment() {
         }
 
         // Two day to expire notification switch initialization
-        binding.switchNotificationTwoDayToExpire!!.isChecked = sharedPreferences.getBoolean("Notification_TwoDayExpire", true)
-        binding.switchNotificationTwoDayToExpire!!.setOnCheckedChangeListener { _, isChecked ->
-            sharedPreferences.edit().putBoolean("Notification_TwoDayExpire", isChecked).apply()
-            if (!isChecked) {
-                cancelAlarm(TwoDayToExpireCheckReceiver::class.java, 1)
+        binding.switchNotificationTwoDayToExpire.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked && !areNotificationsEnabled()) {
+                showNotificationPermissionDialog()
+                binding.switchNotificationTwoDayToExpire.isChecked = false
+            } else {
+                sharedPreferences.edit().putBoolean("Notification_TwoDayExpire", isChecked).apply()
+                if (!isChecked) {
+                    cancelAlarm(TwoDayToExpireCheckReceiver::class.java, 1)
+                }
             }
         }
 
@@ -101,7 +123,7 @@ class SettingsFragment : Fragment() {
 
     private fun setAppVersion() {
             val packageInfo = requireContext().packageManager.getPackageInfo(requireContext().packageName, 0)
-            val appVersion = "GroceryManager\nVersion ${packageInfo.versionName}"
+            val appVersion = "Stay Fresh\nVersion ${packageInfo.versionName}"
             binding.textViewAppVersion?.text = appVersion
     }
 
@@ -113,5 +135,45 @@ class SettingsFragment : Fragment() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.FLAG_IMMUTABLE else 0
         )
         alarmManager?.cancel(pendingIntent)
+    }
+
+    // Show dialog prompting user to enable notifications
+    private fun showNotificationPermissionDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Notification Permission")
+            .setMessage("To ensure you receive important alerts, please enable notifications for this app in the settings.")
+            .setPositiveButton("Go to Settings") { _, _ ->
+                try {
+                    val intent = Intent().apply {
+                        action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
+                        putExtra(Settings.EXTRA_APP_PACKAGE, requireContext().packageName)
+                    }
+                    startActivity(intent)
+                } catch (e: ActivityNotFoundException) {
+                    val intent = Intent(Settings.ACTION_SETTINGS)
+                    startActivity(intent)
+                }
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    // Method to check if notifications are enabled
+    private fun areNotificationsEnabled(): Boolean {
+        val notificationManager = requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        return notificationManager.areNotificationsEnabled()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // Update the switch state for TwoDayToExpire notifications when the fragment resumes
+        val notificationsEnabled = areNotificationsEnabled()
+        val twoDayToExpireEnabled = sharedPreferences.getBoolean("Notification_TwoDayExpire", true)
+
+        // Update the switch only if notifications are enabled
+        if (notificationsEnabled) {
+            binding.switchNotificationTwoDayToExpire.isChecked = twoDayToExpireEnabled
+        }
     }
 }

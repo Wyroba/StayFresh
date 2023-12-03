@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/startFragment">
+
+    <fragment
+        android:id="@+id/startFragment"
+        android:name="sheridancollege.prog39402.stayfresh.StartFragment"
+        android:label="fragment_start"
+        tools:layout="@layout/fragment_start" >
+        <action
+            android:id="@+id/action_startFragment_to_fridgeFragment"
+            app:destination="@id/recipeFragment" />
+        <action
+            android:id="@+id/action_startFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/recipeFragment"
+        android:name="sheridancollege.prog39402.stayfresh.RecipeFragment"
+        android:label="Recipes"
+        tools:layout="@layout/fragment_recipe" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="sheridancollege.prog39402.stayfresh.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" />
+
+</navigation>

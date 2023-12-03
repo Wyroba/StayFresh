@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
+import sheridancollege.prog39402.stayfresh.Peter.ContentFragmentDirections
 import sheridancollege.prog39402.stayfresh.Peter.TwoDayToExpireCheckReceiver
 import sheridancollege.prog39402.stayfresh.databinding.FragmentSettingsBinding
 
@@ -79,7 +80,7 @@ class SettingsFragment : Fragment() {
             FirebaseAuth.getInstance().signOut()
 
             // Navigate to login screen
-            val action = SettingsFragmentDirections.actionSettingsFragmentToStartFragment()
+            val action = ContentFragmentDirections.actionContentFragmentToStartFragment()
             findNavController().navigate(action)
 
         }

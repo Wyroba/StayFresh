@@ -9,6 +9,7 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import sheridancollege.prog39402.stayfresh.R
 import sheridancollege.prog39402.stayfresh.Chi.RecipeFragment
+import sheridancollege.prog39402.stayfresh.Chi.SettingsFragment
 
 
 class ContentFragment : Fragment() {
@@ -35,9 +36,11 @@ class ContentFragment : Fragment() {
 
         val firstFragment = PantryFragment()
         val secondFragment = RecipeFragment()
+        val thirdFragment = SettingsFragment()
 
         adapter.addFragment(firstFragment, "Pantry")
         adapter.addFragment(secondFragment, "Recipes")
+        adapter.addFragment(thirdFragment, "Settings")
 
         viewPager.adapter = adapter
         tabs.setupWithViewPager(viewPager)

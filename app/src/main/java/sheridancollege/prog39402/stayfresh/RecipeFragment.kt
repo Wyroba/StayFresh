@@ -101,20 +101,32 @@ class RecipeFragment : Fragment() {
     }
 
     private fun callOpenAIForRecipes() {
-        binding.loadingProgressBar.visibility = View.VISIBLE
-        functions.getHttpsCallable("callOpenAIForRecipes").call().addOnCompleteListener { task ->
-            binding.loadingProgressBar.visibility = View.GONE
-            if (!task.isSuccessful) {
-                val e = task.exception
-                Toast.makeText(context, "Error: ${e?.message}", Toast.LENGTH_SHORT).show()
-                return@addOnCompleteListener
-            }
-            val recipe = task.result?.data as? String
-            recipe?.let {
-                showRecipeDialog(it)
+        FirebaseAuth.getInstance().currentUser?.getIdToken(true)?.addOnCompleteListener { tokenTask ->
+            if (tokenTask.isSuccessful) {
+                val token = tokenTask.result?.token ?: ""
+                val data = hashMapOf("token" to token)
+
+                binding.loadingProgressBar.visibility = View.VISIBLE
+                functions.getHttpsCallable("callOpenAIForRecipes")
+                    .call(data)
+                    .addOnCompleteListener { task ->
+                        binding.loadingProgressBar.visibility = View.GONE
+                        if (!task.isSuccessful) {
+                            val e = task.exception
+                            Toast.makeText(context, "Error: ${e?.message}", Toast.LENGTH_SHORT).show()
+                            return@addOnCompleteListener
+                        }
+                        val recipe = task.result?.data as? String
+                        recipe?.let {
+                            showRecipeDialog(it)
+                        }
+                    }
+            } else {
+                Toast.makeText(context, "Authentication failed: ${tokenTask.exception?.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
+
 
     private fun showRecipeDialog(recipe: String) {
         AlertDialog.Builder(requireContext())

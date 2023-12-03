@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Function to sign in with Firebase Authentication
     private fun signInWithFirebase(email: String, password: String) {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->

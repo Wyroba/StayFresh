@@ -47,7 +47,7 @@ class StartFragment : Fragment(){
             .build()
 
         mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
-        val user = null
+        val user = auth.currentUser
         if (user != null) {
             navigateToDestination()
         } else {

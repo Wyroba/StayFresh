@@ -52,6 +52,11 @@ class StartFragment : Fragment(){
         if (user != null) {
             navigateToDestination()
         } else {
+            binding.googleSignInButton.setOnClickListener {
+                val signInIntent = mGoogleSignInClient.signInIntent
+                startActivityForResult(signInIntent, RC_SIGN_IN)
+            }
+
             binding.buttonLogin.setOnClickListener {
                 val email = binding.editTextEmail.text.toString()
                 val password = binding.editTextPassword.text.toString()
@@ -78,9 +83,10 @@ class StartFragment : Fragment(){
                         .show()
                 }
             }
-        }
 
-        binding.buttonRegister.setOnClickListener{
+            binding.buttonRegister.setOnClickListener {
+                findNavController().navigate(R.id.action_startFragment_to_registerFragment)
+            }
 
         }
     }
@@ -153,5 +159,13 @@ class StartFragment : Fragment(){
                     // Handle the exception here.
                 }
             }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+    }
+
+    companion object {
+        private const val RC_SIGN_IN = 9001
     }
 }

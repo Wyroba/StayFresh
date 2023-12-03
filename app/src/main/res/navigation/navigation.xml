@@ -29,6 +29,11 @@
         android:id="@+id/registerFragment"
         android:name="sheridancollege.prog39402.stayfresh.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_register">
+
+        <action
+            android:id="@+id/action_registerFragment_to_startFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
 
 </navigation>

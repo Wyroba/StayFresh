@@ -24,7 +24,11 @@
         android:id="@+id/registerFragment"
         android:name="sheridancollege.prog39402.stayfresh.Hamza.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_register">
+        <action
+            android:id="@+id/action_registerFragment_to_startFragment"
+            app:destination="@id/startFragment" />
+    </fragment>
     <fragment
         android:id="@+id/pantryFragment2"
         android:name="sheridancollege.prog39402.stayfresh.Peter.PantryFragment"

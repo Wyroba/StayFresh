@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
@@ -78,6 +79,9 @@ class SettingsFragment : Fragment() {
             // Implement your logout logic here
             // This is a dummy example, adjust according to your authentication system
             FirebaseAuth.getInstance().signOut()
+
+            // Show a toast message
+            Toast.makeText(requireContext(), "Successfully logged out", Toast.LENGTH_SHORT).show()
 
             // Navigate to login screen
             val action = ContentFragmentDirections.actionContentFragmentToStartFragment()
